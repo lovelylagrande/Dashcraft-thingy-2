@@ -4,7 +4,10 @@ function main() {
   ID = document.getElementById("IDinput").value;
   ID = ID.replaceAll("/", "");
   ID = ID.slice(ID.length - 24);
-  fetch("https://api.dashcraft.io/trackv2/" + ID + "?supportsLaps1=true")
+  fetch("https://api.dashcraft.io/trackv2/" + ID + "?supportsLaps1=true", {
+        headers: {
+          'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWM0NmMzNGExYmEyMjQyNGYyZTAwMzIiLCJpbnRlbnQiOiJvQXV0aCIsImlhdCI6MTcwNzM3MTU3Mn0.0JVw6gJhs4R7bQGjr8cKGLE7CLAGvyuMiee7yvpsrWg'
+        }})
     .then((response) => response.json())
     .then((json) => sendOut(json));
 
@@ -42,16 +45,17 @@ function createDropdown(playerName, recordList) {
 
 
 function sendOut(response) {
+  console.log(response);
   trackname = response.name;
-  plays = response.plays;
-  likes = response.upvotesCount;
-  dislikes = response.downvotesCount;
+  laps = response.lapsCount + 1;
+  likes = response.likesCount;
+  dislikes = response.dislikesCount;
   verified = response.verified;
-  created = response.createdAt;
   lb = response.leaderboard;
   creator = response.user.username;
+  public = response.isPublic;
   
-  document.getElementById("p1").innerHTML = "<u>Name:</u> " + trackname + "<br><u>Created By:</u> " + creator + "<br><u>Plays:</u> " + plays + "<br><u>Likes:</u> " + likes + "<br><u>Dislikes:</u> " + dislikes + "<br><u>Verified:</u> " + verified.toString() + "<br><u>Creation Date:</u> " + created;
+  document.getElementById("p1").innerHTML = "<u>Name:</u> " + trackname + "<br><u>Created By:</u> " + creator + "<br><u>Laps:</u> " + laps + "<br><u>Likes:</u> " + likes + "<br><u>Dislikes:</u> " + dislikes + "<br><u>Verified:</u> " + verified.toString() + "<br><u>Public:</u> " + public.toString();
 
   lbstr = "<u>username -- time (seconds)</u><br>";
   for (let i = 0; i < lb.length; i++) {
@@ -71,10 +75,15 @@ function sendPieces(response) {
   piecekeys = valueSort(piecedict);
   
   text = "<b><u>Total pieces:</u> " + piecelist.length.toString() + "</b><br>";
+
+  /*
   for (let i = 0; i < piecekeys.length; i++) {
     text += "<u>" + getPieceText(piecekeys[i]) + ":</u> " + piecedict[piecekeys[i]].toString()
     text += "<br>"
   }
+  */
+  text += "Specific piece counter will be added once the full game is released";
+  
   document.getElementById("p2").innerHTML = text;
 }
 
@@ -174,7 +183,7 @@ function IDtoPlayers(IDs) {
     try {
       fetcH = fetch("https://api.dashcraft.io/trackv2/" + IDs[ID] + "?", {
                    headers: {
-                     'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDIyNTg1ZTkwZTQ0OTQxZmJjMGRkNjAiLCJpbnRlbnQiOiJvQXV0aCIsImlhdCI6MTY5OTEyMzc5NX0.d0TZsEcBglpgEaEi4y-1jhNAw2EztFW45Pbhf_8xsMw'
+                     'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWM0NmMzNGExYmEyMjQyNGYyZTAwMzIiLCJpbnRlbnQiOiJvQXV0aCIsImlhdCI6MTcwNzM3MTU3Mn0.0JVw6gJhs4R7bQGjr8cKGLE7CLAGvyuMiee7yvpsrWg'
                    }})
        .then((response) => response.json())
        .then((json) => {
