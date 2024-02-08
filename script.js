@@ -146,7 +146,7 @@ function wrCount(countAll) {
   var fetches = [];
   var URL1 = "https://api.dashcraft.io/trackv2/verified2?page=";
   if (countAll) {
-    URL1 = "https://api.dashcraft.io/trackv2/global/";
+    URL1 = "https://api.dashcraft.io/trackv2/global2?sort=2&page=";
   }
   for (let i = 0; i < 10; i++) {
     fetches.push(
