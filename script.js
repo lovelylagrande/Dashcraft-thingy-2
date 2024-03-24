@@ -31,7 +31,7 @@ function createDropdown(playerName, recordList) {
   for (let i=0; i<recordList.length; i++) {
     listItem = document.createElement("a");
     listItem.target = "_blank";
-    listItem.href = "https://dashcraft.io/new/?t=" + recordList[i][0];
+    listItem.href = "https://dashcraft.io?t=" + recordList[i][0];
     listItem.innerHTML = recordList[i][1];
     dropContent.appendChild(listItem);
   }
