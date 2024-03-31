@@ -189,10 +189,11 @@ function IDtoPlayers(IDs) {
        .then((json) => {
           jsonLB = json.leaderboard;
           var trackName = json.name;
+          var creatorName = json.user.username;
           if (trackName == "") {
            trackName = "Unnamed Track"
           }
-          var track = [json._id, trackName];
+          var track = [json._id, creatorName];
          
           for (let v=0; v<jsonLB.length; v++) {
             var username = jsonLB[v].user.username;
